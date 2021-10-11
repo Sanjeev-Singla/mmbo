@@ -46,5 +46,8 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
     Route::match(['get','post'],'change-password',[Auth\ResetPasswordController::class,'changePassword'])->name('admin-change-password');
     
     Route::resource('users', Admin\UserController::class);
+    
+    Route::resource('invoices',Admin\InvoiceController::class);
 });
+
 

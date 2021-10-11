@@ -1,12 +1,9 @@
-{!! Form::open(['route' => ['users.destroy', $id], 'method' => 'delete']) !!}
+{!! Form::open(['route' => ['invoices.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    <a href="{{ route('invoices.index',$id) }}" class='btn btn-primary btn-xs'>
-        <i class="glyphicon glyphicon-file"></i>
-    </a>
-    <a href="{{ route('users.show', $id) }}" class='btn btn-default btn-xs'>
+    <a href="{{ route('invoices.show', $id) }}" class='btn btn-default btn-xs'>
         <i class="glyphicon glyphicon-eye-open"></i>
     </a>
-    <a href="{{ route('users.edit', $id) }}" class='btn btn-default btn-xs'>
+    <a href="{{ route('invoices.edit', $id) }}" class='btn btn-default btn-xs'>
         <i class="glyphicon glyphicon-edit"></i>
     </a>
     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', [

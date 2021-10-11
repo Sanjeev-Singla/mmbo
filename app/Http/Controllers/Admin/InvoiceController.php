@@ -2,84 +2,150 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\DataTables\InvoiceDataTable;
+use App\Http\Requests\Admin;
+use App\Http\Requests\Admin\CreateInvoiceRequest;
+use App\Http\Requests\Admin\UpdateInvoiceRequest;
+use App\Repositories\InvoiceRepository;
+use Flash;
+use App\Http\Controllers\AppBaseController;
+use Response;
 
-class InvoiceController extends Controller
+class InvoiceController extends AppBaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    /** @var  InvoiceRepository */
+    private $invoiceRepository;
+
+    public function __construct(InvoiceRepository $invoiceRepo)
     {
-        //
+        $this->invoiceRepository = $invoiceRepo;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the Invoice.
      *
-     * @return \Illuminate\Http\Response
+     * @param InvoiceDataTable $invoiceDataTable
+     * @return Response
+     */
+    public function index(InvoiceDataTable $invoiceDataTable)
+    {
+        return $invoiceDataTable->render('admin.invoices.index');
+    }
+
+    /**
+     * Show the form for creating a new Invoice.
+     *
+     * @return Response
      */
     public function create()
     {
-        //
+        return view('admin.invoices.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Invoice in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateInvoiceRequest $request
+     *
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateInvoiceRequest $request)
     {
-        //
+        $input = $request->all();
+
+        $invoice = $this->invoiceRepository->create($input);
+
+        Flash::success('Invoice saved successfully.');
+
+        return redirect(route('invoices.index'));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Invoice.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     *
+     * @return Response
      */
     public function show($id)
     {
-        //
+        $invoice = $this->invoiceRepository->find($id);
+
+        if (empty($invoice)) {
+            Flash::error('Invoice not found');
+
+            return redirect(route('invoices.index'));
+        }
+
+        return view('admin.invoices.show')->with('invoice', $invoice);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Invoice.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     *
+     * @return Response
      */
     public function edit($id)
     {
-        //
+        $invoice = $this->invoiceRepository->find($id);
+
+        if (empty($invoice)) {
+            Flash::error('Invoice not found');
+
+            return redirect(route('invoices.index'));
+        }
+
+        return view('admin.invoices.edit')->with('invoice', $invoice);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Invoice in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int              $id
+     * @param UpdateInvoiceRequest $request
+     *
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($id, UpdateInvoiceRequest $request)
     {
-        //
+        $invoice = $this->invoiceRepository->find($id);
+
+        if (empty($invoice)) {
+            Flash::error('Invoice not found');
+
+            return redirect(route('invoices.index'));
+        }
+
+        $invoice = $this->invoiceRepository->update($request->all(), $id);
+
+        Flash::success('Invoice updated successfully.');
+
+        return redirect(route('invoices.index'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Invoice from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     *
+     * @return Response
      */
     public function destroy($id)
     {
-        //
+        $invoice = $this->invoiceRepository->find($id);
+
+        if (empty($invoice)) {
+            Flash::error('Invoice not found');
+
+            return redirect(route('invoices.index'));
+        }
+
+        $this->invoiceRepository->delete($id);
+
+        Flash::success('Invoice deleted successfully.');
+
+        return redirect(route('invoices.index'));
     }
 }
