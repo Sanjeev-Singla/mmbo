@@ -46,45 +46,48 @@
                 <i class="fa fa-times-circle"></i> {{ Session::get('success') }}
             </div>
         @endif
-        <form method="post" action="{{ route('admin-login') }}">
-            @csrf
+        @if (\Auth::check())
+            <h1>Hello</h1>
+        @else
+            <form method="post" action="{{ route('admin-login') }}">
+                @csrf
 
-            <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="@lang('auth.email')">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                @if ($errors->has('email'))
-                    <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
-                @endif
-            </div>
+                <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
+                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="@lang('auth.email')">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
+                </div>
 
-            <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
-                <input type="password" class="form-control" placeholder="@lang('auth.password')" name="password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                @if ($errors->has('password'))
-                    <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-                @endif
+                <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
+                    <input type="password" class="form-control" placeholder="@lang('auth.password')" name="password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                    @endif
 
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            {{-- <input type="checkbox" name="remember"> @lang('auth.remember_me') --}}
-                        </label>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                {{-- <input type="checkbox" name="remember"> @lang('auth.remember_me') --}}
+                            </label>
+                        </div>
                     </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('auth.sign_in')</button>
+                    </div>
+                    <!-- /.col -->
                 </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('auth.sign_in')</button>
-                </div>
-                <!-- /.col -->
-            </div>
-        </form>
-
+            </form>
+        @endif
         <!-- <a href="{{ url('/password/reset') }}">@lang('auth.login.forgot_password')</a><br>
         <a href="{{ url('/register') }}" class="text-center">@lang('auth.login.register_membership')</a> -->
 

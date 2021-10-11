@@ -12,10 +12,27 @@
         "inView": false
     },
     {
-        "name": "title",
-        "dbType": "string,50",
+        "name": "name",
+        "dbType": "string,255",
         "htmlType": "text",
-        "validations": "required",
+        "validations": "required|max:255|min:3",
+        "fillable": true,
+        "searchable": true
+    },
+    {
+        "name": "email",
+        "dbType": "string,255",
+        "htmlType": "text",
+        "validations": "required|email|max:255",
+        "fillable": true,
+        "searchable": true
+    },
+    {
+        "name": "password",
+        "dbType": "string,255:default,''",
+        "htmlType": "text",
+        "validations": "required|max:255|min:3",
+        "fillable": true,
         "searchable": true
     },
     {

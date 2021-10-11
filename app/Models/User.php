@@ -40,4 +40,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static $rules = [
+        'name' =>   'required|max:255|min:3',
+        'email' =>  'required|email|max:255',
+        'password'  => 'required|max:255|min:3'
+    ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
 }
