@@ -29,7 +29,8 @@ class InvoiceController extends AppBaseController
      */
     public function index(InvoiceDataTable $invoiceDataTable)
     {
-        return $invoiceDataTable->render('admin.invoices.index');
+        $user = $_GET['user'];
+        return $invoiceDataTable->render('admin.invoices.index',compact('user'));
     }
 
     /**
@@ -39,7 +40,8 @@ class InvoiceController extends AppBaseController
      */
     public function create()
     {
-        return view('admin.invoices.create');
+        $user = $_GET['user'];
+        return view('admin.invoices.create',compact('user'));
     }
 
     /**
@@ -57,7 +59,8 @@ class InvoiceController extends AppBaseController
 
         Flash::success('Invoice saved successfully.');
 
-        return redirect(route('invoices.index'));
+        return redirect(url('admin/invoices?user='.$input['user_id']));
+        //return redirect(route('invoices.index'));
     }
 
     /**
@@ -96,8 +99,8 @@ class InvoiceController extends AppBaseController
 
             return redirect(route('invoices.index'));
         }
-
-        return view('admin.invoices.edit')->with('invoice', $invoice);
+        $user = $invoice->user_id;
+        return view('admin.invoices.edit',compact('invoice','user'));
     }
 
     /**
@@ -122,7 +125,8 @@ class InvoiceController extends AppBaseController
 
         Flash::success('Invoice updated successfully.');
 
-        return redirect(route('invoices.index'));
+        //return redirect(route('invoices.index'));
+        return redirect(url('admin/invoices?user='.$request->user_id));
     }
 
     /**

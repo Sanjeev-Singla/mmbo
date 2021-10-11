@@ -12,7 +12,7 @@ class Invoice extends Model
     protected $fillable = [
         'title',
         'amount',
-        'password',
+        'user_id',
     ];
 
     public static $rules = [

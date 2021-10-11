@@ -29,7 +29,7 @@ class InvoiceDataTable extends DataTable
      */
     public function query(Invoice $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('user_id',$_GET['user']);
     }
 
     /**

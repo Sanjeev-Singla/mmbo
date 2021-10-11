@@ -16,6 +16,8 @@
     {!! Form::hidden('user_id', null, ['class' => 'form-control']) !!}
 </div>
 
+<input type="hidden" value="{{ $user }}" name="user_id">
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

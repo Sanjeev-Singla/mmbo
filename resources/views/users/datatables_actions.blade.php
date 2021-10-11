@@ -1,6 +1,6 @@
 {!! Form::open(['route' => ['users.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    <a href="{{ route('invoices.index',$id) }}" class='btn btn-primary btn-xs'>
+    <a href="{{ url('admin/invoices?user='.$id) }}" class='btn btn-primary btn-xs'>
         <i class="glyphicon glyphicon-file"></i>
     </a>
     <a href="{{ route('users.show', $id) }}" class='btn btn-default btn-xs'>
